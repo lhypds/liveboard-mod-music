@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { ROOTS, QUALITIES, INTERVALS, TUNING, parseChord, chordNotes, guitarVoicings, mod12 } from "./chords.ts";
+import { ROOTS, QUALITIES, INTERVALS, TUNING, parseChord, chordNotes, guitarVoicings, pianoFingers, mod12 } from "./chords.ts";
 
 test("normalizes common chord notation without confusing major and minor", () => {
   for (const [input, expected] of [[" c ", "C"], ["a minor", "Am"], ["F♯7", "F#7"], ["B♭maj7", "Bbmaj7"], ["CM7", "Cmaj7"], ["Cm7", "Cm7"], ["CΔ", "Cmaj7"], ["D°", "Ddim"]]) {
@@ -17,6 +17,17 @@ test("spells enharmonic notes by degree and keeps piano notes within the keyboar
     const notes = chordNotes(parseChord(root + quality));
     assert.ok(notes.every(note => note.midi >= 60 && note.midi <= 83));
     assert.equal(new Set(notes.map(note => note.midi)).size, notes.length);
+  }
+});
+
+test("piano fingering gives every note a finger, thumb on the root and little finger on top, in rising order", () => {
+  for (const root of ROOTS) for (const quality of QUALITIES) {
+    const chord = parseChord(root + quality);
+    const fingers = pianoFingers(chord);
+    assert.equal(fingers.length, chordNotes(chord).length, chord.symbol);
+    assert.equal(fingers[0], 1, chord.symbol);
+    assert.equal(fingers.at(-1), 5, chord.symbol);
+    assert.ok(fingers.every((finger, i) => i === 0 || finger > fingers[i - 1]), chord.symbol);
   }
 });
 

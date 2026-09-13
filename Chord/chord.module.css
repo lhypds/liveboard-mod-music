@@ -34,8 +34,10 @@
 .activeKey { fill: #eac784; stroke: #806136; stroke-width: 0.8; }
 .keyText, .lightText { font-size: 11px; font-weight: 600; fill: #172029; }
 .lightText { fill: #fff; }
+.finger, .lightFinger { font-size: 9px; fill: #806136; }
+.lightFinger { fill: rgba(255, 255, 255, 0.7); }
 .octave { font-size: 10px; fill: #64748b; }
-.legend { display: flex; gap: 14px; margin-top: 7px; color: #64748b; font-size: 10px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 7px; color: #64748b; font-size: 10px; }
 .legend span { display: flex; align-items: center; gap: 5px; }
 .rootSwatch, .toneSwatch { display: inline-block; width: 8px; height: 8px; background: #283f42; }
 .toneSwatch { background: #eac784; }
@@ -57,11 +59,11 @@
 .voicingControls button:hover:enabled { background: #f1f5f9; }
 .tabular { font-variant-numeric: tabular-nums; }
 .direction { font-size: 10px; color: #64748b; }
-.error, .hint { padding: 20px 0; font-size: 12px; line-height: 1.7; }
-.error { color: #b42318; }
-.hint { color: #64748b; }
+.error { margin-top: 8px; font-size: 11px; line-height: 1.5; color: #b42318; }
 @container (max-width: 340px) {
   .inputLabel { flex-basis: 100%; }
-  .guitar { width: 53%; }
+  /* Too narrow to sit side by side: the diagram is the point of the card, so it takes the row. */
+  .guitarRow { flex-direction: column; align-items: stretch; }
+  .guitar { width: 100%; margin: 0 auto; }
   .guitarHelp { gap: 5px; }
 }

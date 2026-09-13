@@ -35,6 +35,12 @@ export function chordNotes(chord: Chord): { name: string; midi: number }[] {
   });
 }
 
+/** Right-hand fingering for the root-position chord: thumb on the root, little finger on the top note. */
+export function pianoFingers(chord: Chord): number[] {
+  if (INTERVALS[chord.quality].length === 4) return [1, 2, 3, 5];
+  return chord.quality === "sus4" ? [1, 4, 5] : chord.quality === "sus2" ? [1, 2, 5] : [1, 3, 5];
+}
+
 export type Voicing = {
   frets: number[]; // Low E to high E; -1 means muted.
   fingers: number[]; // 0 means open/muted, 1–4 are fretting fingers.
