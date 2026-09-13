@@ -6,7 +6,7 @@
   "description": "liveboard-mod-music: interactive music components for Liveboard",
   "scripts": {
     "typecheck": "tsc -p .",
-    "test": "node --experimental-strip-types --test Chord/chords.test.mjs"
+    "test": "node --experimental-strip-types --test Chord/*.test.mjs"
   },
   "peerDependencies": {
     "react": "^19.2.6",

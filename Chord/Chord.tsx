@@ -3,13 +3,14 @@ import { useTranslation } from "react-i18next";
 import Dropdown from "@ui/Dropdown/Dropdown";
 import { ROOTS, QUALITIES, TUNING, chordNotes, guitarVoicings, mod12, parseChord, pianoFingers } from "./chords";
 import type { Chord as ChordValue, Voicing } from "./chords";
+import { playGuitar, playPiano } from "./audio";
 import styles from "./chord.module.css";
 
 const LABELS = {
   en: {
     input: "Enter a chord", root: "Root", quality: "Chord type", piano: "Piano", guitar: "Guitar",
     position: "Root position · C4–B5", tuning: "Standard tuning · no capo", rootNote: "Root note", chordTone: "Chord tone",
-    rightHand: "Right hand · 1 thumb · 2 index · 3 middle · 4 ring · 5 little",
+    rightHand: "Right hand · 1 thumb · 2 index · 3 middle · 4 ring · 5 little", play: "Play",
     error: "Use a root A–G, optional # / ♭, then major, m, 7, maj7, m7, sus2, sus4 or dim. Example: F#7. Slash chords are not supported yet.",
     voicing: "Voicing", previous: "Previous voicing", next: "Next voicing",
     open: "○ Open string", mute: "× Do not play", fingers: "1 index · 2 middle · 3 ring · 4 little", barre: "A connecting bar means one finger holds several strings.",
@@ -19,7 +20,7 @@ const LABELS = {
   zh: {
     input: "输入和弦", root: "根音", quality: "和弦类型", piano: "钢琴", guitar: "吉他",
     position: "原位和弦 · C4–B5", tuning: "标准调弦 · 无变调夹", rootNote: "根音", chordTone: "和弦音",
-    rightHand: "右手 · 1 拇指 · 2 食指 · 3 中指 · 4 无名指 · 5 小指",
+    rightHand: "右手 · 1 拇指 · 2 食指 · 3 中指 · 4 无名指 · 5 小指", play: "播放",
     error: "请输入 A–G 根音，可加 # / ♭，以及 m、7、maj7、m7、sus2、sus4 或 dim，例如 F#7。目前不支持斜杠和弦。",
     voicing: "指型", previous: "上一个指型", next: "下一个指型",
     open: "○ 空弦", mute: "× 不弹", fingers: "1 食指 · 2 中指 · 3 无名指 · 4 小指", barre: "连接线表示用同一根手指横按多根弦。",
@@ -29,7 +30,7 @@ const LABELS = {
   ja: {
     input: "コードを入力", root: "ルート", quality: "コードの種類", piano: "ピアノ", guitar: "ギター",
     position: "基本形 · C4–B5", tuning: "標準チューニング · カポなし", rootNote: "ルート音", chordTone: "構成音",
-    rightHand: "右手 · 1 親指 · 2 人差し指 · 3 中指 · 4 薬指 · 5 小指",
+    rightHand: "右手 · 1 親指 · 2 人差し指 · 3 中指 · 4 薬指 · 5 小指", play: "再生",
     error: "A–G、必要に応じて # / ♭ と m、7、maj7、m7、sus2、sus4、dim を入力。例：F#7。分数コードは未対応です。",
     voicing: "フォーム", previous: "前のフォーム", next: "次のフォーム",
     open: "○ 開放弦", mute: "× 弾かない", fingers: "1 人差し指 · 2 中指 · 3 薬指 · 4 小指", barre: "連結線は一本の指で複数の弦を押さえるセーハです。",
@@ -39,6 +40,12 @@ const LABELS = {
 };
 type Labels = typeof LABELS.en;
 const pretty = (note: string) => note.replace(/#/g, "♯").replace(/b/g, "♭");
+
+function PlayButton({ label, onClick }: { label: string; onClick: () => void }) {
+  return <button type="button" className={styles.play} aria-label={label} title={label} onClick={onClick}>
+    <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.5v7l6-3.5z" /></svg>
+  </button>;
+}
 
 function Piano({ chord, labels }: { chord: ChordValue; labels: Labels }) {
   const notes = chordNotes(chord);
@@ -114,6 +121,7 @@ export default function Chord({ config }: { config: Record<string, unknown> }) {
   const typed = parseChord(value);
   // A valid symbol previews as it is typed; anything unparsable leaves the saved chord on screen.
   const chord = typed ?? savedChord;
+  const notes = chordNotes(chord);
   const voicings = guitarVoicings(chord);
   const storedIndex = typeof comp?.voicing === "number" ? comp.voicing : local.voicing;
   const index = chord.symbol === savedChord.symbol && Number.isInteger(storedIndex) && storedIndex >= 0 && storedIndex < voicings.length ? storedIndex : 0;
@@ -156,10 +164,13 @@ export default function Chord({ config }: { config: Record<string, unknown> }) {
     {error && <p id={`${id}-hint`} role="status" className={styles.error}>{t.error}</p>}
     <div className={styles.summary} aria-live="polite">
       <strong>{pretty(chord.symbol)}</strong>
-      <span>{t.notes}<b>{chordNotes(chord).map(note => pretty(note.name)).join(" · ")}</b></span>
+      <span>{t.notes}<b>{notes.map(note => pretty(note.name)).join(" · ")}</b></span>
     </div>
     <section className={styles.section}>
-      <div className={styles.sectionHead}><h3>{t.piano}</h3><span>{t.position}</span></div>
+      <div className={styles.sectionHead}>
+        <div className={styles.sectionTitle}><h3>{t.piano}</h3><PlayButton label={`${t.play}: ${t.piano}`} onClick={() => playPiano(notes.map(note => note.midi))} /></div>
+        <span>{t.position}</span>
+      </div>
       <Piano chord={chord} labels={t} />
       <div className={styles.legend}>
         <span><i className={styles.rootSwatch} />{t.rootNote}</span>
@@ -168,7 +179,10 @@ export default function Chord({ config }: { config: Record<string, unknown> }) {
       </div>
     </section>
     <section className={styles.section}>
-      <div className={styles.sectionHead}><h3>{t.guitar}</h3><span>{t.tuning}</span></div>
+      <div className={styles.sectionHead}>
+        <div className={styles.sectionTitle}><h3>{t.guitar}</h3><PlayButton label={`${t.play}: ${t.guitar}`} onClick={() => playGuitar(voicing.frets.flatMap((fret, i) => fret < 0 ? [] : [TUNING[i] + fret]))} /></div>
+        <span>{t.tuning}</span>
+      </div>
       <div className={styles.guitarRow}>
         <Guitar chord={chord} voicing={voicing} labels={t} />
         <div className={styles.guitarHelp}>

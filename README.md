@@ -16,6 +16,7 @@ Piano: the chord in root position within C4–B5, root key in dark green, the ot
 Guitar: standard E A D G B E tuning, no capo. The familiar open shape comes first, then the movable A- and E-shape forms; `‹` `›` step through them.  
 The diagram reads low E to high E, left to right. Numbered dots are left-hand fingers (1 index … 4 little), a bar is a barre, `○` open string, `×` do not play, fret numbers on the left.  
 A valid symbol previews as it is typed; Enter or leaving the field saves it, and a pick from the dropdowns saves at once. An unparsable entry shows a hint and keeps the saved chord on screen.  
+`▶` next to each instrument plays the chord: the piano as a block chord, the guitar strummed as fingered. Both are synthesized with the Web Audio API (an additive struck-string tone for the piano, a Karplus-Strong string for the guitar), so nothing is downloaded.  
 The chord and the chosen voicing live in `comp`, so every Chord card on a board can show a different chord.  
 Slash chords, extended (9 / 11 / 13) chords and alternate tunings are out of scope.  
 Chord diagram conventions follow [Fender's guide to reading chord charts](https://www.fender.com/articles/chords/how-to-read-a-chord-chart).  
