@@ -1,0 +1,8 @@
+{
+  "comp_set": {
+    "name": { "en": "Music", "ja": "音楽", "zh": "音乐" },
+    "mods": {
+      "Chord": { "enabled": true, "allowMultipleInstances": true }
+    }
+  }
+}

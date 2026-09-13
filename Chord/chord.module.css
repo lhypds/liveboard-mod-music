@@ -1,0 +1,67 @@
+.container {
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+  color: #172029;
+  background: #fff;
+  font-size: 12px;
+  scrollbar-width: thin;
+  container-type: inline-size;
+}
+.controls { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; }
+.inputLabel { flex: 1 1 140px; min-width: 0; }
+.inputLabel, .selectLabel { display: flex; flex-direction: column; gap: 4px; }
+.inputLabel > span, .selectLabel > span { color: #64748b; font-size: 10px; }
+.inputLabel input {
+  width: 100%; height: 26px; border: 1px solid #172029; border-radius: 0;
+  padding: 2px 6px; background: white; color: #172029; font-size: 12px;
+}
+.inputLabel input:focus-visible, .container button:focus-visible { outline: 2px solid #b87926; outline-offset: 2px; }
+.inputLabel input[aria-invalid="true"] { border-color: #b42318; }
+.selectLabel > div > button { min-height: 26px; }
+.summary { display: flex; align-items: center; gap: 18px; margin: 15px 0 12px; }
+.summary > strong { font-size: 30px; font-weight: 500; line-height: 1.1; letter-spacing: -1px; }
+.summary > span { color: #64748b; font-size: 10px; }
+.summary b { display: block; margin-top: 3px; font-size: 13px; font-weight: 500; color: #172029; }
+.section { border-top: 1px solid #d8dde3; padding-top: 9px; margin-top: 10px; }
+.sectionHead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.sectionHead h3 { font-size: 12px; font-weight: 600; }
+.sectionHead > span { font-size: 10px; color: #64748b; }
+.piano { display: block; width: 100%; overflow: visible; }
+.whiteKey { fill: #fff; stroke: #64748b; stroke-width: 0.8; }
+.blackKey { fill: #172029; stroke: #172029; }
+.rootKey { fill: #283f42; stroke: #172029; stroke-width: 0.8; }
+.activeKey { fill: #eac784; stroke: #806136; stroke-width: 0.8; }
+.keyText, .lightText { font-size: 11px; font-weight: 600; fill: #172029; }
+.lightText { fill: #fff; }
+.octave { font-size: 10px; fill: #64748b; }
+.legend { display: flex; gap: 14px; margin-top: 7px; color: #64748b; font-size: 10px; }
+.legend span { display: flex; align-items: center; gap: 5px; }
+.rootSwatch, .toneSwatch { display: inline-block; width: 8px; height: 8px; background: #283f42; }
+.toneSwatch { background: #eac784; }
+.guitarRow { display: flex; align-items: center; gap: 8px; }
+.guitar { width: 52%; max-width: 240px; flex-shrink: 0; }
+.fret { stroke: #94a3b8; stroke-width: 1; }
+.nut { stroke: #172029; stroke-width: 4; }
+.string { stroke: #64748b; }
+.fretNumber, .stringLabel { font-size: 10px; fill: #64748b; }
+.noteLabel { font-size: 11px; fill: #172029; }
+.openMarker { font-size: 16px; fill: #172029; }
+.barre { stroke: #283f42; stroke-width: 14px; stroke-linecap: round; }
+.rootDot { fill: #283f42; }
+.toneDot { fill: #eac784; stroke: #806136; stroke-width: 0.5; }
+.guitarHelp { display: flex; flex-direction: column; gap: 7px; min-width: 0; color: #64748b; font-size: 10px; line-height: 1.5; }
+.voicingControls { display: flex; align-items: center; gap: 8px; color: #172029; white-space: nowrap; }
+.voicingControls button { width: 22px; height: 22px; border: 1px solid #172029; font-size: 18px; line-height: 1; background: white; cursor: pointer; }
+.voicingControls button:disabled { opacity: 0.25; cursor: default; }
+.voicingControls button:hover:enabled { background: #f1f5f9; }
+.tabular { font-variant-numeric: tabular-nums; }
+.direction { font-size: 10px; color: #64748b; }
+.error, .hint { padding: 20px 0; font-size: 12px; line-height: 1.7; }
+.error { color: #b42318; }
+.hint { color: #64748b; }
+@container (max-width: 340px) {
+  .inputLabel { flex-basis: 100%; }
+  .guitar { width: 53%; }
+  .guitarHelp { gap: 5px; }
+}
