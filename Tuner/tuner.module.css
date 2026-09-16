@@ -1,0 +1,18 @@
+.tuner { display: flex; flex-direction: column; }
+/* Auto margins centre the body without clipping its top when the card is shorter than it. */
+.body { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: auto 0; padding-top: 10px; text-align: center; }
+.stepper { display: flex; align-items: center; gap: 6px; height: 26px; }
+.note { min-height: 60px; font-size: 56px; font-weight: 500; line-height: 1; letter-spacing: -0.04em; }
+.note sub { margin-left: 2px; color: var(--muted); font-size: 20px; letter-spacing: 0; vertical-align: baseline; }
+.detail { min-height: 18px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.meter { display: block; width: 100%; max-width: 320px; overflow: visible; }
+.band { fill: #dfe9e3; }
+.tick { stroke: var(--muted); stroke-width: 1; }
+.tickLabel { font-size: 10px; fill: var(--muted); }
+.needle { stroke: #b87926; stroke-width: 4; transition: transform 80ms linear; }
+.needle[data-tune="in"] { stroke: var(--root); }
+.status { min-height: 18px; color: #b87926; font-size: 12px; font-weight: 600; }
+.status[data-tune="in"] { color: var(--root); }
+.strings { display: flex; gap: 4px; }
+.strings button { width: 32px; padding: 0; }
+.strings button[data-near="true"] { background: var(--root); color: #fff; }

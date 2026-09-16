@@ -1,0 +1,18 @@
+.metronome { display: flex; flex-direction: column; }
+/* Auto margins centre the body without clipping its top when the card is shorter than it. */
+.body { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: auto 0; text-align: center; }
+.squares { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; min-height: 22px; }
+.squares i { width: 12px; height: 12px; border: 1px solid var(--border); background: #fff; }
+.squares i[data-level="1"] { width: 16px; height: 16px; }
+.squares i[data-level="2"] { width: 22px; height: 22px; }
+.squares i[data-on="true"] { background: var(--tone); }
+.squares i[data-on="true"][data-level="2"] { background: var(--root); }
+.readout { display: flex; align-items: baseline; gap: 6px; }
+.bpm { font-size: 56px; font-weight: 500; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.readout span, .marking { color: var(--muted); font-size: 12px; }
+.marking { min-height: 16px; margin-top: -4px; }
+.slider { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 320px; }
+.slider input { flex: 1; min-width: 0; accent-color: var(--root); }
+.actions { display: flex; gap: 8px; }
+.actions button { min-width: 80px; }
+.settings { justify-content: center; text-align: left; }

@@ -1,0 +1,19 @@
+.heading { display: flex; align-items: center; gap: 10px; margin: 14px 0 10px; }
+.heading strong { font-size: 24px; font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; }
+.table { display: grid; align-items: baseline; gap: 4px; text-align: center; font-variant-numeric: tabular-nums; }
+.table b { font-size: 14px; font-weight: 600; white-space: nowrap; }
+.rowLabel { padding-right: 6px; color: var(--muted); font-size: 10px; text-align: left; white-space: nowrap; }
+.degree { font-size: 12px; }
+/* A step is the gap between two notes, so it sits halfway to the next column. */
+.step { color: var(--muted); font-size: 10px; translate: 50% 0; }
+.fretboard { display: block; width: 100%; }
+.dotText, .lightDotText { font-size: 10px; font-weight: 600; fill: var(--ink); pointer-events: none; }
+.lightDotText { fill: #fff; }
+.toggle { display: flex; }
+.toggle button + button { border-left: 0; }
+.chords { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 6px; }
+.chord { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 4px; border: 1px solid var(--border); border-radius: 0; background: #fff; color: var(--ink); cursor: pointer; }
+.chord span { color: var(--muted); font-size: 10px; }
+.chord b { font-size: 14px; font-weight: 600; white-space: nowrap; }
+.chord:hover { background: var(--ink); color: #fff; }
+.chord:hover span { color: rgba(255, 255, 255, 0.7); }

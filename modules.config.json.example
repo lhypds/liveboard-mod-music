@@ -2,7 +2,11 @@
   "comp_set": {
     "name": { "en": "Music", "ja": "音楽", "zh": "音乐" },
     "mods": {
-      "Chord": { "enabled": true, "allowMultipleInstances": true }
+      "Chord": { "enabled": true, "allowMultipleInstances": true },
+      "Scale": { "enabled": true, "allowMultipleInstances": true },
+      "Progression": { "enabled": true, "allowMultipleInstances": true },
+      "Metronome": { "enabled": true, "allowMultipleInstances": true },
+      "Tuner": { "enabled": true, "allowMultipleInstances": false }
     }
   }
 }

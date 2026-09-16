@@ -3,14 +3,16 @@ import { test } from "node:test";
 import { ROOTS, QUALITIES, INTERVALS, TUNING, parseChord, chordNotes, guitarVoicings, pianoFingers, mod12 } from "./chords.ts";
 
 test("normalizes common chord notation without confusing major and minor", () => {
-  for (const [input, expected] of [[" c ", "C"], ["a minor", "Am"], ["F♯7", "F#7"], ["B♭maj7", "Bbmaj7"], ["CM7", "Cmaj7"], ["Cm7", "Cm7"], ["CΔ", "Cmaj7"], ["D°", "Ddim"]]) {
+  for (const [input, expected] of [[" c ", "C"], ["a minor", "Am"], ["F♯7", "F#7"], ["B♭maj7", "Bbmaj7"], ["CM7", "Cmaj7"], ["Cm7", "Cm7"], ["CΔ", "Cmaj7"], ["D°", "Ddim"],
+    ["C+", "Caug"], ["Ebaug", "Ebaug"], ["Bø", "Bm7b5"], ["F#m7♭5", "F#m7b5"], ["A-7b5", "Am7b5"], ["G°7", "Gdim7"], ["Bbdim7", "Bbdim7"]]) {
     assert.equal(parseChord(input)?.symbol, expected, input);
   }
-  for (const input of ["", "H", "C/E", "C9", "hello", "C##", "C7junk", "Cconstructor"]) assert.equal(parseChord(input), null, input);
+  for (const input of ["", "H", "C/E", "C9", "hello", "C##", "C7junk", "Cconstructor", "C7b5", "Caugg"]) assert.equal(parseChord(input), null, input);
 });
 
 test("spells enharmonic notes by degree and keeps piano notes within the keyboard", () => {
-  for (const [symbol, names] of [["C", ["C", "E", "G"]], ["Am", ["A", "C", "E"]], ["C#", ["C#", "E#", "G#"]], ["Bbmaj7", ["Bb", "D", "F", "A"]], ["Bdim", ["B", "D", "F"]], ["F#dim", ["F#", "A", "C"]]]) {
+  for (const [symbol, names] of [["C", ["C", "E", "G"]], ["Am", ["A", "C", "E"]], ["C#", ["C#", "E#", "G#"]], ["Bbmaj7", ["Bb", "D", "F", "A"]], ["Bdim", ["B", "D", "F"]], ["F#dim", ["F#", "A", "C"]],
+    ["G#aug", ["G#", "B#", "D##"]], ["Cdim7", ["C", "Eb", "Gb", "Bbb"]], ["F#m7b5", ["F#", "A", "C", "E"]]]) {
     assert.deepEqual(chordNotes(parseChord(symbol)).map(note => note.name), names);
   }
   for (const root of ROOTS) for (const quality of QUALITIES) {

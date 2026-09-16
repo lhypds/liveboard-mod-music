@@ -1,0 +1,80 @@
+/* Shared by every music card: the card surface, its form controls, and the piano and chord-chart drawings. */
+.container {
+  --border: #172029;
+  --ink: #172029;
+  --muted: #64748b;
+  --root: #283f42;
+  --tone: #eac784;
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+  color: var(--ink);
+  background: #fff;
+  font-size: 12px;
+  scrollbar-width: thin;
+  container-type: inline-size;
+}
+.controls { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; }
+.inputLabel, .selectLabel { display: flex; flex-direction: column; gap: 4px; }
+.inputLabel { flex: 1 1 140px; min-width: 0; }
+.inputLabel > span, .selectLabel > span { color: var(--muted); font-size: 10px; white-space: nowrap; }
+.inputLabel input {
+  width: 100%; height: 26px; border: 1px solid var(--border); border-radius: 0;
+  padding: 2px 6px; background: white; color: var(--ink); font-size: 12px;
+}
+.container input:focus-visible, .container button:focus-visible { outline: 2px solid #b87926; outline-offset: 2px; }
+.inputLabel input[aria-invalid="true"] { border-color: #b42318; }
+.selectLabel > div > button { min-height: 26px; }
+.error { margin-top: 8px; font-size: 12px; line-height: 1.5; color: #b42318; }
+.hint { color: var(--muted); font-size: 10px; line-height: 1.5; }
+.tabular { font-variant-numeric: tabular-nums; }
+
+.summary { display: flex; align-items: center; gap: 18px; margin: 14px 0 12px; }
+.summary > strong { font-size: 30px; font-weight: 500; line-height: 1.1; letter-spacing: -0.04em; white-space: nowrap; }
+.summary > span { color: var(--muted); font-size: 10px; }
+.summary b { display: block; margin-top: 4px; font-size: 14px; font-weight: 500; color: var(--ink); }
+.section { border-top: 1px solid var(--border); padding-top: 10px; margin-top: 10px; }
+.sectionHead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.sectionHead h3 { font-size: 12px; font-weight: 600; }
+.sectionHead > span { font-size: 10px; color: var(--muted); }
+.sectionTitle { display: flex; align-items: center; gap: 8px; }
+
+/* Buttons: a text button, a square one-glyph button, and the small ▶. All invert on hover, like the board's dropdowns. */
+.button, .square, .play { border: 1px solid var(--border); border-radius: 0; background: white; color: var(--ink); cursor: pointer; }
+.button { height: 26px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
+.square { width: 22px; height: 22px; padding: 0; font-size: 18px; line-height: 1; }
+.play { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; }
+.play svg { width: 10px; height: 10px; fill: currentColor; }
+.button[aria-pressed="true"], .primary { background: var(--ink); color: #fff; }
+.button:hover:enabled, .square:hover:enabled, .play:hover { background: var(--ink); color: #fff; }
+.button:disabled, .square:disabled { opacity: 0.25; cursor: default; }
+
+.piano { display: block; width: 100%; overflow: visible; }
+.pressable { cursor: pointer; }
+.whiteKey { fill: #fff; stroke: var(--muted); stroke-width: 0.8; }
+.blackKey { fill: var(--ink); stroke: var(--ink); }
+.rootKey { fill: var(--root); stroke: var(--ink); stroke-width: 0.8; }
+.activeKey { fill: var(--tone); stroke: #806136; stroke-width: 0.8; }
+.keyText, .lightText { font-size: 12px; font-weight: 600; fill: var(--ink); }
+.lightText { fill: #fff; }
+.finger, .lightFinger { font-size: 10px; fill: #806136; }
+.lightFinger { fill: rgba(255, 255, 255, 0.7); }
+.octave { font-size: 10px; fill: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; color: var(--muted); font-size: 10px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.rootSwatch, .toneSwatch { display: inline-block; width: 8px; height: 8px; background: var(--root); }
+.toneSwatch { background: var(--tone); }
+
+.fret { stroke: #94a3b8; stroke-width: 1; }
+.nut { stroke: var(--ink); stroke-width: 4; }
+.string { stroke: var(--muted); }
+.fretNumber, .stringLabel { font-size: 10px; fill: var(--muted); }
+.noteLabel { font-size: 12px; fill: var(--ink); }
+.openMarker { font-size: 16px; fill: var(--ink); }
+.barre { stroke: var(--root); stroke-width: 14px; stroke-linecap: round; }
+.rootDot { fill: var(--root); }
+.toneDot { fill: var(--tone); stroke: #806136; stroke-width: 0.5; }
+
+@container (max-width: 340px) {
+  .inputLabel { flex-basis: 100%; }
+}
